@@ -1,5 +1,3 @@
-# disability_quiz/management/commands/populate_data.py
-
 import random
 from django.core.management.base import BaseCommand
 from accounts.models import  Student, Question, Answer, StudentAnswer, Category,Suggestion,CustUser
@@ -91,29 +89,39 @@ class Command(BaseCommand):
                 for i in sug:
                    if i.cat.name == "Excellent":
                       student.suggestion= i.suggestion
+                      student.video=i.video
+                      student.audio=i.audio
             elif score >= 6:
                 student.category = "Good"
                 for i in sug:
                    if i.cat.name == "Good":
                     student.suggestion= i.suggestion
+                    student.video=i.video
+                    student.audio=i.audio
            
             elif score>= 4:
                 student.category = "Average"
                 for i in sug:
                    if i.cat.name == "Average":
                     student.suggestion= i.suggestion
+                    student.video=i.video
+                    student.audio=i.audio
            
             elif score >= 2:
                 student.category = "Poor"
                 for i in sug:
                    if i.cat.name == "Poor":
                     student.suggestion= i.suggestion
+                    student.video=i.video
+                    student.audio=i.audio
         
             else:
                 student.category = "Very Poor"
                 for i in sug:
                    if i.cat.name == "Very Poor":
                     student.suggestion= i.suggestion
+                    student.video=i.video
+                    student.audio=i.audio
           
                 
 

@@ -18,16 +18,17 @@
 
   </head>
   <body>
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color:rgb(179, 217, 224);position:relative fixed;width: 100%;">
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(19,19,53,1) 0%, rgba(94,94,147,1) 0%, rgba(1,239,236,1) 100%);position:relative fixed;width: 100%;">
     <div>
         <h2 class="mr-2 ml-5" style="text-align: left; letter-spacing: 2px;font-family:fantasy;font-weight: bold;" >Questionairre</h2>
     </div>
-    <div style="margin-left: 80%;text-decoration: none;color: black;background-color: white;padding: 4px;border-radius: 0.5rem;"><a href="{% url 'sh' %}"><span class="material-symbols-outlined">
-        arrow_back
-        </span></a></div>
+    <div style="margin-left: 80%;text-decoration: none;color: white;padding: 4px;border-radius: 0.5rem;" ><a href="{% url 'sh' %}" class="text-white"><span class="material-symbols-outlined">
+      exit_to_app
+      </span></a></div>
     </nav>
     <div class="mx-0 mx-sm-auto" >
-  <div class="card" >
+  <div class="card"  >
     <!-- <div class="card-header bg-primary">
       <h5 class="card-title text-white mt-2 text-center" id="exampleModalLabel"></h5>
     </div> -->
@@ -39,8 +40,9 @@
           <strong>Select Your answers in the box given</strong>
         </p>
       </div>
-      <hr/>    
-        <form method="post" action="{% url 'submit_exam' %}">
+      <hr/>  
+        <div class="card" style="padding: 15px;">
+          <form method="post" action="{% url 'submit_exam' %}">
           {% csrf_token %}
           {% for student_answer in student_answers %}
               <p>{{forloop.counter}} . {{ student_answer.question.text }}</p>
@@ -55,9 +57,14 @@
                   {% endfor %}
               </ul>
           {% endfor %}
-          <input class="btn btn-success" type="submit" value="Submit Exam">
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col"><input class="btn btn-info btn-block" type="submit" value="Submit Answer"></div>
+            <div class="col-4"></div>
+          </div>
         </form>
-      
+      </div>
+
    
     </div>
 

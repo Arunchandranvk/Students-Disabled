@@ -49,11 +49,14 @@ class Score_view(TemplateView):
           context['data']=StudentAnswer.objects.all().order_by('student')
           context['que']=Question.objects.all()
           query=self.request.GET.get('query')
-          if query:              
+          if query:   
              context["searchs"]=StudentAnswer.objects.filter(Q( student=query) )
           else :
                None   
           return context
+     
+class Ques(TemplateView):
+    template_name="questions.html"     
      
      
 

@@ -14,14 +14,19 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,700,0,200" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,700,0,200" />
   </head>
   <body>
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color:rgb(179, 217, 224);position:relative fixed;width: 100%;">
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background: rgb(2,0,36);
+                        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(19,19,53,1) 0%, rgba(94,94,147,1) 0%, rgba(1,239,236,1) 100%);position:relative fixed;width: 100%;">
     <div>
         <h2 class="mr-2 ml-5" style="text-align: left; letter-spacing: 2px;font-family:fantasy;font-weight: bold;" >Details</h2>
          </div>
+          <div style="margin-left: 85%;text-decoration: none;color: white;padding: 4px;border-radius: 0.5rem;" ><a href="{% url 'stu' %}" class="text-white"><span class="material-symbols-outlined">
+exit_to_app
+</span></a></div>
     </nav>    
-    <div class="row">
+    <div class="row mr-2">
         <div class="col-2 ml-2 mt-2">
             <div class="card ml-1 mt-1 mb-1">
                 <div class="card-body font-weight-bold">
@@ -58,9 +63,19 @@
                     Category
                 </div>
             </div>
-            <div class="card ml-1 mt-1 mb-1 font-weight-bold">
+            <div class="card ml-1 mt-1 mb-1 font-weight-bold" style="padding:100px 0px;">
                 <div class="card-body">
                     Suggestion
+                </div>
+            </div>
+            <div class="card ml-1 mt-1 mb-1 font-weight-bold" style="padding: 4px 0px; ">
+                <div class="card-body">
+                    Video
+                </div>
+            </div>
+            <div class="card ml-1 mt-1 mb-1 font-weight-bold" style="padding: 4px 0px;">
+                <div class="card-body">
+                    Audio
                 </div>
             </div>
         </div>
@@ -101,19 +116,37 @@
                 </div>
             </div>
             <div class="card ml-1 mt-1 mb-1">
-                <div class="card-body">
+                <div class="card-body" style="height:265px;">
                    {{data.suggestion}}
+                </div>
+            </div>
+            <div class="card ml-1 mt-1 mb-1">
+                <div class="card-body" style="height:70px;">
+                {% if data.video %}
+                   {{data.video}}
+                {% else %}
+                  <h5>No Videos...</h5>
+                {% endif %}  
+                </div>
+            </div>
+            <div class="card ml-1 mt-1 mb-1">
+                <div class="card-body" style="height:70px;">
+                   {% if data.audio %}
+                   {{data.audio}}
+                {% else %}
+                  <h5>No Audios...</h5>
+                {% endif %}
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    {% comment %} <div class="row">
         <div class="col"></div>
         <div class="col mt-2">
             <a href="{% url 'que' data.id %}" class="btn btn-block btn-success">Assign Test</a>
         </div>
         <div class="col"></div>
-    </div>
+    </div> {% endcomment %}
    
 
 

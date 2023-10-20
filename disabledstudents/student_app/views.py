@@ -4,6 +4,7 @@ from django.views.generic import FormView,TemplateView,UpdateView,View
 from accounts.forms import *
 from .forms import *
 from django.contrib.auth import authenticate,login,logout
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -47,29 +48,36 @@ def submit_exam(request):
                 for i in sug:
                    if i.cat.name == "Excellent":
                       stu.suggestion= i.suggestion
+                      stu.video=i.video
+                      stu.audio=i.audio
             elif total_score >= 6:
                 stu.category = "Good"
                 for i in sug:
                    if i.cat.name == "Good":
                     stu.suggestion= i.suggestion
-           
+                    stu.video=i.video
+                    stu.audio=i.audio
             elif total_score>= 4:
                 stu.category = "Average"
                 for i in sug:
                    if i.cat.name == "Average":
                     stu.suggestion= i.suggestion
-           
+                    stu.video=i.video
+                    stu.audio=i.audio
             elif total_score >= 2:
                 stu.category = "Poor"
                 for i in sug:
                    if i.cat.name == "Poor":
                     stu.suggestion= i.suggestion
-        
+                    stu.video=i.video
+                    stu.audio=i.audio
             else:
                 stu.category = "Very Poor"
                 for i in sug:
                    if i.cat.name == "Very Poor":
-                    stu.suggestion= i.suggestion            
+                        stu.suggestion= i.suggestion
+                        stu.video=i.video
+                        stu.audio=i.audio            
             stu.score = total_score
             stu.save()
             
@@ -85,6 +93,12 @@ class Profile(TemplateView):
       id=self.request.user
       context['data']=Student.objects.get(std_id=id)
       return context
+   
+class ProfileUpdateView(UpdateView):
+    template_name="profileupdate.html"
+    model=Student
+    form_class=StudentFormProfile
+    success_url=reverse_lazy('pro')
 
 
 class SugView(TemplateView):
@@ -100,7 +114,11 @@ class ResultView(TemplateView):
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs) 
       id=self.request.user
+      print(id)
+      std=id.id
+      print(std)
       context['data']=Student.objects.get(std_id=id)
+      context['result']=StudentAnswer.objects.filter(student=std)
       return context
 
 # class Profile(TemplateView):
@@ -135,3 +153,20 @@ class LogOut(View):
     def get(self,request,*args,**kwargs):
         logout(request)
         return redirect("log")      
+    
+
+class Text(TemplateView):
+    template_name="text.html"    
+    def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs) 
+      id=self.request.user
+      context['data']=Student.objects.get(std_id=id)
+      return context
+    
+class Audio(TemplateView):
+    template_name="audio.html"    
+    def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs) 
+      id=self.request.user
+      context['data']=Student.objects.get(std_id=id)
+      return context

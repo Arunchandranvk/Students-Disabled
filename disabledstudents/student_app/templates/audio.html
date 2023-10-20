@@ -1,0 +1,25 @@
+{% extends 'sugg.html' %}
+{% block sug %}
+
+{% if data.audio  %}
+        <div class="row ml-2 mt-2 mr-3"  >
+        <div class="col-3"></div>
+        <div class="col">
+            <div class="card ml-1 mt-1 mb-1" >
+                <div class="card-body font-weight-bold" >
+                    <h4>Audio is here....Listen it....</h4>
+                    <audio controls>
+                        <source src="{% url 'play_audioo' audio_id=data.id %}">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+            <div class="col-3"></div>
+        </div>
+{% else %}
+        <div class="text-center" style="padding: 100px;">
+            <h4>No Audio Found!!!!!!!</h4>
+        </div>
+{% endif %}
+{% endblock sug %}

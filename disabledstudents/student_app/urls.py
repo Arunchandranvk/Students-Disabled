@@ -10,5 +10,7 @@ urlpatterns =[
     path('result/',ResultView.as_view(),name='res'),
     path('cp/',ChangePasswordView.as_view(),name="cp"),
     path('logout/',LogOut.as_view(),name="logout"),
-
+    path('proupdate/<int:pk>/',ProfileUpdateView.as_view(),name="proupd"),
+    path('video/',Text.as_view(),name='text'),
+    path('audio/',Audio.as_view(),name='audio'),
 ]

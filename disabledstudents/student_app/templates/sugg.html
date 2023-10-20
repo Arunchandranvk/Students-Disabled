@@ -18,29 +18,64 @@
 
   </head>
   <body>
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color:rgb(179, 217, 224);position:relative fixed;width: 100%;">
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background: rgb(2,0,36);
+     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgb(160, 160, 198) 0%, rgba(94,94,147,1) 0%, rgba(1,239,236,1) 100%);position:relative fixed;width: 100%;">
     <div>
         <h2 class="mr-2 ml-5" style="text-align: left; letter-spacing: 2px;font-family:fantasy;font-weight: bold;" >Suggestions</h2>
     </div>
-    <div style="margin-left: 80%;text-decoration: none;color: black;background-color: white;padding: 4px;border-radius: 0.5rem;"><a href="{% url 'sh' %}"><span class="material-symbols-outlined">
-        arrow_back
-        </span></a></div>
+    <div style="margin-left: 80%;text-decoration: none;color: white;padding: 4px;border-radius: 0.5rem;" ><a href="{% url 'sh' %}" class="text-white"><span class="material-symbols-outlined">
+exit_to_app
+</span></a></div>
     </nav>
-    <div class="row" style="width: 96%;">
-        <div class="col-2 ml-2 mt-2">
-            <div class="card ml-1 mt-1 mb-1">
-                <div class="card-body font-weight-bold">
-                   Suggestion
-                </div>
-            </div>
+    <nav class="navbar  navbar-expand-lg text-center" style="margin-left: 35%;">
+            <div> 
+                <h5 class="mr-2 ml-5 mt-3 " style="text-align: left; letter-spacing: 2px;font-family: 'Times New Roman', Times, serif; " > <a style="text-decoration: none;color: #000;"  href="{% url 'sug' %}" > Video </a></h5>
+            </div> 
+            <div>
+            <h5 class="mr-2 ml-1 mt-3" style="text-align: left; letter-spacing: 2px;font-family: 'Times New Roman', Times, serif;" > <a  style="text-decoration: none;color: #000;" href="{% url 'audio' %}"> Audio</a></h5>
         </div>
-        <div class="col ml-2 mt-2">
-            <div class="card ml-1 mt-1 mb-1">
-                <div class="card-body font-weight-bold">
-                   {{data.suggestion}}
-                </div>
-            </div>
+            <div>
+            <h5 class="mr-2 ml-1 mt-3" style="text-align: left; letter-spacing: 2px;font-family: 'Times New Roman', Times, serif;" > <a style="text-decoration: none;color: #000;" href="{% url 'text' %}"> Some text For You!! </a></h5>
         </div>
-            </div>
+    </nav>
+    <hr>
+    {% block sug %}
+        {% if data.video %}
+        <div class="row ml-2 mt-2 mr-3" >
+            <!-- <div class="card ml-1 mt-1 mb-1 " style="margin-left: 20%;"> -->
+                <div class="card-body font-weight-bold" style="margin-left: 23%;">
+                    <video  controls width="900" height="460">
+                        <source src="{% url 'view_videoo' data.id %}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video><br>
+                   <!-- <a href="">{{data.video}}</a> -->
+                   <a href="#"  id="downloadVideo" class="btn btn-info">Download Video</a>             
+                </div>
+            <!-- </div> -->
+        </div>
+        {% else %}
+        <div class="text-center" style="padding: 100px;">
+            <h4>No Video Found!!!!!!!</h4>
+        </div>
+        {% endif %}
+        {% endblock %}
+        
+        
+        <script>
+            document.getElementById("downloadVideo").addEventListener("click", function() {
+                // Replace 'video_url' with the actual URL of the video file.
+                const videoUrl = "{% url 'view_videoo' data.id %}";
+                
+                // Create an anchor element to initiate the download.
+                const a = document.createElement("a");
+                a.href = videoUrl;
+                a.download = "video.mp4";  // Provide the desired filename for the video.
+                a.style.display = "none";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        </script>
+        
   </body>
 </html>

@@ -18,22 +18,23 @@
 
   </head>
   <body>
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color:rgb(179, 217, 224);position:relative fixed;width: 100%;">
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background: rgb(2,0,36);
+     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgb(160, 160, 198) 0%, rgba(94,94,147,1) 0%, rgba(1,239,236,1) 100%);position:relative fixed;width: 100%;">
     <div>
         <h2 class="mr-2 ml-5" style="text-align: left; letter-spacing: 2px;font-family:fantasy;font-weight: bold;" >Change </h2>
     </div>
     <div>
         <h2 class="mr-2 " style="text-align: left; letter-spacing: 2px;font-family:fantasy;font-weight: bold;" > Password</h2>
     </div>
-    <div style="margin-left: 80%;text-decoration: none;color: black;background-color: white;padding: 4px;border-radius: 0.5rem;"><a href="{% url 'sh' %}"><span class="material-symbols-outlined">
-        arrow_back
-        </span></a></div>
+     <div style="margin-left: 75%;text-decoration: none;color: white;padding: 4px;border-radius: 0.5rem;" ><a href="{% url 'sh' %}" class="text-white"><span class="material-symbols-outlined">
+exit_to_app
+</span></a></div>
     </nav>
    <div class=" mt-5">
          <div class="card" style="border: none;" >
             <form action="" target="side" method="post" >
                 {% csrf_token %}
-                <div class="row">
+                <div class="row mr-2">
                     <div class="col-3 text-center"> <label class="form-label" for="{{form.image.id_for_label}}">Current Pssword:</label></div>
                     <div class="col">
                         <div class="form-outline mb-4">
@@ -42,7 +43,7 @@
                           </div>
                     </div>
                 </div>   
-                <div class="row">
+                <div class="row mr-2">
                     <div class="col-3 text-center"> <label class="form-label" for="{{form.image.id_for_label}}">New Password :</label></div>
                     <div class="col">
                         <div class="form-outline mb-4">
@@ -51,7 +52,7 @@
                           </div>
                     </div>
                 </div>   
-                <div class="row">
+                <div class="row mr-2">
                     <div class="col-3 text-center"> <label class="form-label" for="{{form.image.id_for_label}}">Confirm Password :</label></div>
                     <div class="col">
                         <div class="form-outline mb-4">
@@ -61,7 +62,13 @@
                     </div>
                 </div>   
                 <div class=" text-center">
-                  <button class="btn btn-info ">Submit</button>
+                <div class="row mr-2">
+                  <div class="col"></div>
+                  <div class="col">                  
+                    <button class="btn btn-info btn-block">Submit</button>
+                  </div>
+                  <div class="col"></div>
+                </div>
                 </div>
             </form>
          </div>

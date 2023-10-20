@@ -16,6 +16,9 @@ class Subjects(models.Model):
 
 class Student(models.Model):
     std_id=models.CharField(unique=True,max_length=50)
+    first_name=models.CharField(max_length=100,null=True,blank=True)
+    last_name=models.CharField(max_length=100,null=True,blank=True)
+    img=models.FileField(upload_to="student image",null=True,blank=True)
     options=(
         ("Male","Male"),
         ("Female","Female"),
@@ -47,6 +50,8 @@ class Student(models.Model):
     score = models.IntegerField(null=True)
     category = models.CharField(max_length=200,null=True)
     suggestion=models.TextField(null=True) 
+    video=models.FileField(upload_to='suggested video',null=True)
+    audio=models.FileField(upload_to='suggested audio',null=True)
 
     def __str__(self):
         return self.std_id
@@ -62,7 +67,7 @@ class Question(models.Model):
         return self.text
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE,default="question")
     text = models.CharField(max_length=255)
     is_correct = models.BooleanField(default=False)
 
@@ -84,8 +89,12 @@ class Category(models.Model):
         return self.name   
     
 class Suggestion(models.Model):
-     suggestion=models.TextField()  
+     suggestion=models.TextField(null=True)  
      cat=models.ForeignKey(Category,on_delete=models.CASCADE,related_name='sugg')  
+     video=models.FileField(upload_to='suggested video',null=True)
+     audio=models.FileField(upload_to='suggested audio',null=True)
+     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
+     
      def __str__(self):
         return self.cat.name
      

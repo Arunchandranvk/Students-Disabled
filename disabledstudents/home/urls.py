@@ -7,4 +7,5 @@ urlpatterns = [
     path('search/',Search.as_view(),name="sea"),
     path('detail/<int:pk>/',DetailView.as_view(),name='det'),
     path('Test_details/',Score_view.as_view(),name='score'),
+    path('qhome/',Ques.as_view(),name="q")
 ]

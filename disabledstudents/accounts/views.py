@@ -5,11 +5,14 @@ from django.shortcuts import render,redirect
 from .models import *
 from .models import Question
 from .forms import *
-from django.views.generic import FormView,CreateView,UpdateView,TemplateView
-from django.contrib.auth import authenticate,login
+from django.views.generic import FormView,CreateView,UpdateView,TemplateView,View
+from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse_lazy
 from django.contrib.auth.hashers import make_password
-
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
+from .models import Suggestion
+from student_app.forms import ChangePasswordForm
 # Create your views here.
 
 import pandas as pd
@@ -110,4 +113,139 @@ def AssignView(request,**kwargs):
 
     return render(request, 'testall.html', {'tests': tests})          
  
-   
+class Quesdel(CreateView):
+    template_name="quesdel.html"
+    model=Question
+    form_class=QuesForm
+    success_url=reverse_lazy('qans')
+    def get_context_data(self, **kwargs) :
+        context = super().get_context_data(**kwargs)
+        context['tests']=Question.objects.all()
+        return context 
+     
+class QuesUpdate(UpdateView):
+    template_name="questionupdate.html"
+    model=Question
+    form_class=QuesForm
+    success_url=reverse_lazy('qdel') 
+    def get_context_data(self, **kwargs) :
+        context = super().get_context_data(**kwargs)
+        context['tests']=Question.objects.all()
+        return context     
+ 
+class QuesAnsUpdView(CreateView):
+    template_name="quesansupdate.html"
+    model=Answer
+    form_class=QuesAnsForm
+    success_url=reverse_lazy('qdel')   
+
+class DeleteView(View):
+    def get(self,req,*args,**kwargs):
+       id=kwargs.get('pk')
+       dl=Question.objects.get(id=id)
+       dl.delete()
+       return redirect('qdel')
+    
+# class Quesdel(TemplateView):
+#     template_name="quesdel.html"
+#     def get_context_data(self, **kwargs) :
+#         context = super().get_context_data(**kwargs)
+#         context['tests']=Question.objects.all()
+#         return context
+
+class SugView(TemplateView):
+    template_name="suggestions.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data']=Suggestion.objects.all().order_by('cat')
+        return context
+
+class SuggTextView(CreateView):
+    template_name="suggtext.html"
+    model=Suggestion
+    form_class=SugForm
+    success_url=reverse_lazy('st')
+
+
+
+class SuggVideoView(CreateView):
+    template_name="suggvideo.html"
+    model=Suggestion
+    form_class=SugVideoForm
+    success_url=reverse_lazy('sv')
+
+class SuggAudioView(CreateView):
+    template_name="suggaudio.html"
+    model=Suggestion
+    form_class=SugAudioForm
+    success_url=reverse_lazy('sadd')
+
+
+
+
+def view_video(request, video_id):
+    video = get_object_or_404(Suggestion, pk=video_id)
+    video_path = video.video.path
+    response = FileResponse(open(video_path, 'rb'))  # Adjust content_type as needed
+    return response
+
+
+def view_videoo(request, videoo_id):
+    video = get_object_or_404(Student, pk=videoo_id)
+    video_path = video.video.path
+    response = FileResponse(open(video_path, 'rb'))  # Adjust content_type as needed
+    return response
+
+
+
+
+def play_audio(request, audio_id):
+    audio_recording = get_object_or_404(Suggestion, pk=audio_id)
+    audio_file = audio_recording.audio
+    response = FileResponse(open(audio_file.path, 'rb'))
+    return response
+
+def play_audioo(request, audio_id):
+    audio_recording = get_object_or_404(Student, pk=audio_id)
+    audio_file = audio_recording.audio
+    response = FileResponse(open(audio_file.path, 'rb'))
+    return response
+
+
+class DeleteViewSug(View):
+    def get(self,req,*args,**kwargs):
+       id=kwargs.get('pk')
+       dl=Suggestion.objects.get(id=id)
+       dl.delete()
+       return redirect('sadd')
+    
+
+class ChangePasswordViewHome(FormView):
+    template_name="changepshome.html"
+    form_class=ChangePasswordForm
+    def post(self,request,*args,**kwargs):
+        form_data=ChangePasswordForm(data=request.POST)
+        if form_data.is_valid():
+            current=form_data.cleaned_data.get("current_password")
+            new=form_data.cleaned_data.get("new_password")
+            confirm=form_data.cleaned_data.get("confirm_password")
+            user=authenticate(request,username=request.user.username,password=current)
+            if user:
+                if new==confirm:
+                    user.set_password(new)
+                    user.save()
+                    logout(request)
+                    return redirect("log")
+                else:
+                    return redirect("cp")
+            else:
+                return redirect("cp")
+        else:
+            return render(request,"changepassword.html",{"form":form_data})    
+        
+
+class SuggestionUpdateView(UpdateView):
+    template_name='suggestionupdate.html'
+    model=Suggestion
+    form_class=SuggestionForm
+    success_url=reverse_lazy('sadd')        
