@@ -38,11 +38,21 @@
         <i class="far fa-file-alt fa-4x mb-3 text-primary"></i>
         <p>
           <strong>Select Your answers in the box given</strong>
+          {% if messages %}
+        {% for i in messages%}
+         {% if i.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+         <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{i}}
+          </div>
+         {% endif %}
+        {% endfor %}
+      {% endif %}
         </p>
       </div>
       <hr/>  
         <div class="card" style="padding: 15px;">
-          <form method="post" action="{% url 'submit_exam' %}">
+          <form method="post" action="{% url 'submit_exam' %}" onsubmit="myButton.disabled = true; return true;">
           {% csrf_token %}
           {% for student_answer in student_answers %}
               <p>{{forloop.counter}} . {{ student_answer.question.text }}</p>

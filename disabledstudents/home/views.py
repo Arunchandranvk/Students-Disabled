@@ -46,7 +46,7 @@ class Score_view(TemplateView):
      template_name='testscore.html'
      def get_context_data(self, **kwargs):
           context = super().get_context_data(**kwargs)
-          context['data']=StudentAnswer.objects.all().order_by('student')
+          context['data']=Student.objects.all().order_by('std_id')
           context['que']=Question.objects.all()
           query=self.request.GET.get('query')
           if query:   
@@ -60,4 +60,13 @@ class Ques(TemplateView):
      
      
 
-     
+class SD(TemplateView):
+    template_name='student_details.html'
+    def get_context_data(self, **kwargs):
+          context = super().get_context_data(**kwargs)
+          id=kwargs.get('pk')
+          print(id)
+        #   sd=StudentAnswer.objects.filter(student=id)
+          context['data']=StudentAnswer.objects.filter(student=id)
+          print(context)
+          return context

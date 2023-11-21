@@ -24,6 +24,38 @@
               color: rgba(128, 128, 128, 0.953);
               padding: .4rem .4rem .1rem .4rem;
               }
+              body {
+            background-color: #f8f9fa;
+            
+        }
+
+        .custom-form {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            padding: 5px 40px ;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }        
      </style>
   </head>
   <body>
@@ -36,59 +68,46 @@
 exit_to_app
 </span></a></div>
     </nav>
+    <div class="custom-form mt-5">
     <div class="text-center">
         <h2 class="mr-2 ml-1 mt-3" style=" letter-spacing: 2px;font-family:fantasy;" >Add Student Details</h2>
     </div>
      <form action="" method="POST" enctype="multipart/form-data" >
      {% csrf_token %}
-     <div class="container fluid">
-       <div class="row mr-2">
-        <div class="col-2"></div>
-        <div class="col mt-5">
-          <div class="row mr-2 mt-2">
-            {{form.std_id.error}}
-            {{form.std_id}}
-           </div>
-          <div class="row mr-2 mt-4">
-            <div class="col-2">
-              <label for="">Gender :</label>
-            </div>
-            <div class="col">
-              {{form.gender.error}}
-              {{form.gender}}
-            </div>
-          </div>
-                 
-          <div class="row mr-2 mt-2">
-            {{form.age.error}}
-            {{form.age}}
-          </div>
-           <div class="row mr-2 mt-3">
-            <div class="col-2">
-              <label for="">Disability Type :</label>
-            </div>
-           
-            {{form.disability.error}}
-            {{form.disability}}
-           </div>
-          
-          <div class="row mr-2 mt-3">
-            <div class="col-2">
-              <label for="">Access Technology:</label>
-            </div>
-           <div class="col">
-            {{form.accesstechnology.error}}
-            {{form.accesstechnology}}
-          </div>
-          </div>
+     <div class="form-group">
+      <label for="{{ form.std_id.id_for_label }}">Student ID</label>
+      {{ form.std_id }}
+  </div>
+
+  <!-- Gender -->
+  <div class="form-group">
+      <label for="{{ form.gender.id_for_label }}"></label>
+      {{ form.gender }}
+  </div>
+
+  <!-- Age -->
+  <div class="form-group">
+      <label for="{{ form.age.id_for_label }}">Age</label>
+      {{ form.age }}
+  </div>
+  
+  <div class="form-group">
+      <label for="{{ form.disability.id_for_label }}">Disability : </label>
+      {{ form.disability }}
+  </div>
+  <div class="form-group">
+      <label for="{{ form.accesstechnology.id_for_label }}">Acess Technology : </label>
+      {{ form.accesstechnology }}
+  </div>   
            <div class="text-center mt-2">
             <button type="submit" class="btn btn-success">Confirm</button>
            </div>
         </div>
-        <div class="col-2"></div>
+        <div class="col-1"></div>
        </div>
        <!-- <label for="">Student ID :</label> -->
       </div>
      </form>
+    </div>
   </body>
 </html>

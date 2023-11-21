@@ -5,6 +5,7 @@ from accounts.forms import *
 from .forms import *
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse_lazy
+from django.contrib import messages
 # Create your views here.
 
 
@@ -29,7 +30,11 @@ def studentanswer(request,**kwargs):
 
 
 def submit_exam(request):
-    if request.method == 'POST':
+    student = request.user.id
+    if Student.objects.filter(id=student, score__isnull=False).exists():
+        messages.error(request,"Exam Already Attended!!!!!!")
+        return render(request, 'exam.html') 
+    elif request.method == 'POST':
         student = request.user.id 
         stu=Student.objects.get(id=student)
         total_score = 0

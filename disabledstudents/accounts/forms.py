@@ -20,6 +20,7 @@ class StudentForm(forms.ModelForm):
                'std_id':forms.TextInput(attrs={"placeholder":"Student Id","class":"form-control","style":"border-radius: 0.75rem; "}),
                'gender':forms.RadioSelect(),
                'age':forms.NumberInput(attrs={"placeholder":"Age","class":"form-control","style":"border-radius: 0.75rem; "}),
+          
           }
 
 class UserRegForm(UserCreationForm):
